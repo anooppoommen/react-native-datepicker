@@ -52,9 +52,41 @@ class DatePicker extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.date !== prevState.date) {
-      return {date: this.getDate(nextProps.date)};
+    const {mode, minDate, maxDate, format = FORMATS[mode], date} = nextProps;
+    let dateFin;
+
+    if (!date) {
+      let now = new Date();
+      if (minDate) {
+        let _minDate = this.getDate(minDate);
+
+        if (now < _minDate) {
+          dateFin = _minDate;
+        }
+      }
+
+      if (maxDate) {
+        let _maxDate = this.getDate(maxDate);
+
+        if (now > _maxDate) {
+          dateFin = _maxDate;
+        }
+      }
+
+      dateFin = now;
     }
+
+    if (date instanceof Date) {
+      dateFin = date;
+    } else {
+      dateFin = Moment(date, format).toDate();
+    }
+
+
+    if (nextProps.date !== prevState.date) {
+      return {date: dateFin};
+    }
+
     return null;
   }
 

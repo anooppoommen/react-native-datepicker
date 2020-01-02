@@ -74,9 +74,7 @@ class DatePicker extends Component {
       }
 
       dateFin = now;
-    }
-
-    if (date instanceof Date) {
+    } else if (date instanceof Date) {
       dateFin = date;
     } else {
       dateFin = Moment(date, format).toDate();

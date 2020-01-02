@@ -13,8 +13,10 @@ import {
   Animated,
   Keyboard
 } from 'react-native';
+
 import Style from './style';
 import Moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const FORMATS = {
   'date': 'YYYY-MM-DD',
@@ -50,8 +52,8 @@ class DatePicker extends Component {
     this.setModalVisible = this.setModalVisible.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.date !== this.props.date) {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.date !== prevState.date) {
       this.setState({date: this.getDate(nextProps.date)});
     }
   }
